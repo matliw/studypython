@@ -11,7 +11,9 @@ def do_stuff_with_strings(txt): # immutable
     lowfi = txt.find('Test')
     highfi = txt.rfind('Test')
     string_list_separated_by_space = txt.rsplit()
+    zxczxc = 1
     return None
+
 
 
 
@@ -82,7 +84,7 @@ def do_bytes():
         print('I can only hold bytes!')
 
 
-    
+    zxczxczxc
 
 def do_stuff_with_sets(txt):
     pass
