@@ -1,4 +1,4 @@
-from collections import ChainMap, Counter, namedtuple, deque
+from collections import ChainMap, Counter, namedtuple, deque, OrderedDict, defaultdict
 
 def do_chainmap():
     # Chainmap - linking objects, faster than dictionary or update(calls)
@@ -77,8 +77,41 @@ def do_deque():
     d.rotate(1)  # deque rotates to 3-1-2, last to first
 
 
+"""Fast at ordering not so efficient with memory as the regula dict"""
+def do_OrderedDict():
+    my_ordered_dict = OrderedDict.fromkeys('mystring')
+    my_ordered_dict.move_to_end('m')
+    moved_to_end = ''.join(my_ordered_dict)
+    my_ordered_dict.move_to_end('g', last=False)
+    moved_to_front = ''.join(my_ordered_dict)
+    my_ordered_dict.popitem()
+
+
+def do_defaultdict():
+    default_d = defaultdict(list)
+    default_d['slow'].append(1)
+    no_key = default_d['missing_key']  # No error, just empty value
+    default_d['again_missing_key'].append(4)  # in regular dict there would be an error because the key is missing, here it will just be added
+    default_d['again_missing_key'].append(3)  # grouping under key
+
+    # grouping
+    my_list = [('Snickers', 2), ('Mars', 1), ('Snickers', 5)]
+    my_dict = defaultdict(list)
+    for k, v in my_list:
+        my_dict[k].append(v)
+
+    # counting
+    my_string = 'doodle'
+    d = defaultdict(int)
+    for letter in my_string:
+        d[letter] += 1
+    pass
+
+
 if __name__ == '__main__':
     do_chainmap()
     do_some_counting()
     do_named_tuple()
     do_deque()
+    do_OrderedDict()
+    do_defaultdict()
