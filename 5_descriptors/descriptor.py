@@ -44,10 +44,6 @@ class Developers:
         self.programming_language = programming_language
 
 
-class AttrLogggerWithProperty:
-
-
-
 if __name__ == '__main__':
     Mateusz = Developers('Mateusz', 'Python')
     Mats_language = Mateusz.programming_language

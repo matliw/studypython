@@ -16,12 +16,14 @@ def do_stuff_with_strings(txt):  # immutable
 
 
 def initialize_data():
-    my_dict = {}
-    my_dict = dict()
-    my_list = []
+    my_dict = dict({'a': 1})
+    my_dict_literal = {}
     my_list = list()
-    my_set = ()
+    my_list_literal = [1,2,3,4]
     my_set = set()
+    my_set_literal = {1,2,3}
+    my_tuple = tuple(1,)
+    my_tuple_literal = (1,2)
 
 
 def do_stuff_with_lists(txt):  # mutable
@@ -53,7 +55,7 @@ def do_stuff_with_tuples(txt):  # immutable
     except:
         print('can\'t assign tuples // also no protection from assigning incorrect order on creation as in dictionary')
     my_tuple + (55,)  # tuples cannot be changed, see below
-    assert my_tuple == tuple(i for i in txt)
+    assert my_tuple == tuple(i for i in txt)  # don't need to iterate
 
     '''named tuples for data assigning'''
     Cat = namedtuple('Cat', 'size sex color')
@@ -120,7 +122,7 @@ def do_stuff_with_dictionary(txt):
     values = ['red', 'green', 'blue']
     zipped_dict = dict(zip(keys, values))
     assert zipped_dict['R'] == 'red'
-    """use iterable key structures as dictionary keys"""
+    """use immutable iterable key structures as dictionary keys"""
     set_dict = {frozenset('alarm'): 'bell'}
     tuple_dict = {tuple({1, 'a'}): 'a'}
     list_dict = {frozenset([1,'a']): 'first move'}
