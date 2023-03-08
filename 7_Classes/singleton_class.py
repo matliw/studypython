@@ -28,6 +28,20 @@ class SingletonMeta(type):
 
     _instances = {}
 
+    @staticmethod
+    def _hash_input(data):
+        import hashlib
+        import json
+
+        try:
+            dict_hash = hashlib.md5()
+            encoded = json.dumps(data[1], sort_keys=True).encode()
+            dict_hash.update(encoded)
+            return dict_hash.hexdigest()
+
+        except TypeError:
+            return data
+
     def __call__(cls, *args, **kwargs):
         """
         Possible changes to the value of the `__init__` argument do not affect
@@ -35,11 +49,11 @@ class SingletonMeta(type):
         """
 
         key = (cls, args[0])
-        a = cls._instances.items()
-        if key not in cls._instances.keys():
+        key_hash = cls._hash_input(key)
+        if key_hash not in cls._instances.keys():
             instance = super().__call__(*args, **kwargs)
-            cls._instances[key] = instance
-        return cls._instances[key]
+            cls._instances[key_hash] = instance
+        return cls._instances[key_hash]
 
 
 class NewSingleton(metaclass=SingletonMeta):
@@ -72,7 +86,9 @@ if __name__ == '__main__':
     b2 = NewSingleton2('BBB')
     a1 = NewSingleton('AAA')
     a2 = NewSingleton('AAA')
-    print(a1 is a2) # must be true
+    a3 = NewSingleton({1: 'AAA'})
+    a4 = NewSingleton([1, 'AAA'])
+    print(a1 is a2)  # must be true
     b1 = NewSingleton('BBB')
-    print(a1 is b1) # must be false
+    print(a1 is b1)  # must be false
     print(b1 is not b2)
